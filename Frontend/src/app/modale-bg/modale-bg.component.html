@@ -1,0 +1,50 @@
+<video
+      *ngIf="videoUrl && !isYoutubeVideo(videoUrl)"
+      autoplay
+      muted
+      loop
+      class="fixed top-0 left-0 w-full h-full object-cover -z-10 brightness-75 rounded-l-xl">
+      <source [src]="videoUrl" type="video/mp4">
+    </video>
+
+    <iframe
+      *ngIf="videoUrl && isYoutubeVideo(videoUrl)"
+      [src]="sanitizedYoutubeUrl"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      class="fixed top-0 left-0 w-full h-full object-cover -z-50 brightness-75 rounded-l-xl">
+    </iframe>
+
+    <!-- 🎛️ Interface Catégories -->
+    <div class="relative z-10">
+   
+
+        <!-- 🔹 Catégories scrollables -->
+        <div class="overflow-x-auto whitespace-nowrap mb-6 scroll-smooth scrollbar-thin scrollbar-thumb-sky-600 bg-slate-500">
+          <button
+            *ngFor="let cat of categories"
+            class="inline-block px-2 py-1 mx-1 rounded-full font-semibold bg-sky-100 text-sky-800 hover:bg-sky-300 transition"
+            [class.bg-sky-600]="cat.id === selectedCategoryId"
+            [class.text-white]="cat.id === selectedCategoryId"
+            (click)="selectCategory(cat)">
+            {{ cat.name }}
+          </button>
+      
+
+        <!-- 🔸 Vidéos de la catégorie sélectionnée -->
+        <div *ngIf="filteredVideos.length > 0">
+          <div class="flex flex-wrap justify-start gap-2 w-72">
+            <img
+              *ngFor="let video of filteredVideos"
+              [src]="video.imageBG"
+              alt="Image"
+              class="w-[75px] h-[75px] rounded-xl shadow-md cursor-pointer hover:scale-105 transition-transform duration-300"
+              (click)="changerVideo(video.video)">
+          </div>
+        </div>
+
+        <!-- ℹ️ Message si pas de vidéos -->
+        <div *ngIf="filteredVideos.length === 0" class="text-center text-sm text-gray-600 italic mt-6">
+          Sélectionnez une catégorie pour voir les vidéos.
+        </div>

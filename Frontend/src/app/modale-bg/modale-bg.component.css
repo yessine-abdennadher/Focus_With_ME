@@ -1,0 +1,35 @@
+:host {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  video,
+ iframe {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2); /* 🔥 agrandit pour couvrir */
+  width: 100vw;
+  height: 56.25vw; /* ratio 16:9 */
+  min-height: 100vh;
+  min-width: 177.77vh;
+  z-index: -10;
+  pointer-events: none;
+  border: none;
+}
+
+  
+  /* Optionnel pour rendre le contenu flou/transparent sur fond vidéo */
+  .interface-container {
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+    min-height: 100vh;
+    overflow-y: auto;
+    z-index: 10;
+    position: relative;
+    padding: 2rem;
+  }
+  

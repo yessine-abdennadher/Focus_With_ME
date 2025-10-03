@@ -1,0 +1,322 @@
+<app-header></app-header>
+<div class="relative h-screen flex items-center justify-between px-10">
+
+  <!-- Navbar (Boutons alignés à gauche) -->
+   <div class="yessine"> 
+  <div class="absolute right-0 top-14 z-50">
+    <div class="flex bg-slate-200 p-3 pl-4 rounded-lg shadow-md gap-3  dark:bg-gray-800">
+      <button class="bg-gradient-to-r from-sky-700 to-sky-500 text-white px-4 py-3 rounded-lg shadow  hover:bg-sky-900" (click)="toggleModal('pic')">
+        <i class="fas fa-image"></i>
+      </button>
+      <button class="bg-gradient-to-r from-sky-700 to-sky-500 text-white px-4 py-3 rounded-lg shadow hover:bg-sky-900"(click)="toggleModal('music')" >
+        <i class="fas fa-music"></i>
+      </button>
+      
+      <button class="bg-gradient-to-r from-sky-700 to-sky-500 text-white px-4 py-3 rounded-lg shadow hover:bg-sky-900 " (click)="toggleModal('stat')" >
+        <i class="fas fa-chart-line"></i>
+
+
+      </button>
+      <button class="bg-gradient-to-r from-sky-700 to-sky-500 text-white px-4 py-3 rounded-lg shadow hover:bg-sky-900"(click)="toggleModal('quote')" >
+        <i class="fas fa-quote-left"></i>
+
+      </button>
+      <button class="bg-gradient-to-r from-sky-700 to-sky-500 text-white px-4 py-3 rounded-lg shadow hover:bg-sky-900" (click)="handleExpand()">
+        <i class="fas fa-expand"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Boutons Timer et Goal -->
+  <div class="absolute left-5 top-10 flex gap-2 z-50">
+    <button class="w-[120px] bg-sky-800/90 rounded-lg text-white text-xs p-2 py-3" (click)="toggleModall('Timer')">
+      <i class="fas fa-info-circle"></i> Personal Timer
+    </button>
+    <button class="w-[120px] bg-sky-800/90 rounded-lg text-white text-xs p-2 py-3" (click)="toggleModall('Goal')">
+      <i class="fas fa-bullseye"></i> Session Goals
+    </button>
+  </div>
+
+  <!-- Modale Timer -->
+  <div *ngIf="showTimerModal">
+    <div class="absolute left-5 top-24 z-50">
+      <div class="bg-sky-800/90 text-white rounded-lg p-6 shadow-lg w-64 flex flex-col gap-4">
+        <div class="flex justify-between items-center">
+          <span class="font-medium flex items-center gap-2">
+            <i class="fas fa-info-circle"></i> Personal Timer
+          </span>
+          <div class="flex gap-3">
+            <i class="fas fa-times cursor-pointer hover:text-gray-300" (click)="toggleModall('Timer')"></i>
+          </div>
+        </div>
+
+        <div class="text-[30px] font-bold text-center py-3 items-center">
+          {{ time }}
+          <i class="fas fa-stop cursor-pointer text-xl pr-3 text-red-500 hover:text-red-600" (click)="resetTimer()"></i>
+          <i *ngIf="isRunning" class="fas fa-pause cursor-pointer text-xl text-yellow-600 hover:text-yellow-600" (click)="toggleTimer()"></i>
+          <i *ngIf="!isRunning" class="fas fa-play cursor-pointer text-xl text-green-600 hover:text-green-600" (click)="toggleTimer()"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Goal -->
+  <div *ngIf="showGoalModal">
+    <div class="absolute left-5 top-60 z-50">
+      <div class="bg-sky-800/90 backdrop-blur-md w-64 text-white rounded-lg p-6 shadow-2xl flex flex-col gap-6 relative">
+        
+        <!-- Button to close modal -->
+        <button (click)="toggleModall('Goal')" class="absolute top-5 right-5 text-white hover:text-gray-300 text-sm">
+          <i class="fas fa-times"></i>
+        </button>
+    
+        <!-- Title -->
+        <div class="text-sm font-medium flex items-center gap-2">
+          <i class="fas fa-bullseye"></i> Session Goals
+        </div>
+    
+        <!-- Form to add a goal -->
+        <form [formGroup]="form" (ngSubmit)="submitGoal()" class="flex items-center gap-2">
+          <input
+            formControlName="but"
+            type="text"
+            placeholder="Type a goal..."
+            class="bg-sky-900/55 hover:bg-sky-900 text-gray-200 text-xs px-3 py-3 rounded-xl font-medium transition w-full"
+          />
+          <button
+            type="submit"
+            class="bg-sky-950/60 hover:bg-sky-950/80 text-gray-200 px-4 py-2.5 rounded-xl font-medium transition"
+          >
+            +
+          </button>
+        </form>
+    
+        <!-- Open / Completed Counter -->
+        <div class="flex justify-around items-center bg-sky-950/50 p-4 rounded-lg text-xs font-medium">
+          <div class="text-center">
+            <div class="text-2xl">{{ openGoalsCount }}</div>
+            <div>Open</div>
+          </div>
+          <div class="border-l border-gray-400 h-6"></div>
+          <div class="text-center">
+            <div class="text-2xl text-green-400">{{ completedGoalsCount }}</div>
+            <div>Completed</div>
+          </div>
+        </div>
+    
+        <!-- List of goals -->
+        <div class="space-y-1">
+          <div *ngFor="let goal of goals" class="flex justify-between items-center py-2 border-b border-gray-200">
+            <div class="flex items-center gap-3">
+              <input 
+                type="checkbox"
+                (change)="toggleCompleted(goal)" 
+                [checked]="goal.completed"
+                class="w-4 h-4 bg-sky-800 border border-gray-200 text-green-400 rounded focus:ring-0 focus:outline-none"
+              >
+              <span class="text-xs" [class.line-through]="goal.completed">{{ goal.but }}</span>
+            </div>
+            
+            <button (click)="removeGoal(goal.id)" class="text-gray-200 hover:text-white text-xs">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+    
+  </div>
+ <!-- 🌌 Vidéo de fond (au tout début, pour être en arrière-plan) -->
+<ng-container *ngIf="videoUrl">
+
+  <!-- Vidéo MP4 locale -->
+  <video
+    *ngIf="!isYoutubeVideo(videoUrl)"
+    autoplay
+    muted
+    loop
+    playsinline
+    class="fixed top-0 left-0 w-screen h-screen object-cover z-[-1]">
+    <source [src]="videoUrl" type="video/mp4" />
+  </video>
+
+  <!-- Vidéo YouTube intégrée -->
+   <div *ngIf="sanitizedYoutubeUrl">
+  <iframe
+    *ngIf="isYoutubeVideo(videoUrl)"
+    [src]="sanitizedYoutubeUrl"
+    frameborder="0"
+    allow="autoplay;  encrypted-media"
+    allowfullscreen
+    class="fixed top-0 left-0 w-screen h-screen scale-[1.15] object-cover z-[-1]">
+  </iframe>
+</div>
+</ng-container>
+
+
+<div *ngIf="showPicModal">
+  <div class="absolute right-3 top-[135px] z-40">
+    <div class="bg-slate-200 backdrop-blur-md w-72 text-gray-600 rounded-lg p-6 flex flex-col  relative shadow-lg dark:bg-gray-800 dark:text-gray-300">
+      <button (click)="toggleModal('pic')" class="absolute top-5 right-5 text-gray-500 hover:text-black/50 text-sm">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="text-sm font-medium flex items-center gap-2">
+        <i class="fas fa-image"></i> Background
+      </div>
+
+      <div class="max-w-72   rounded-lg py-4 px-1"
+     >
+     <div class="flex flex-wrap gap-1 ">
+      <button
+        *ngFor="let cat of categories"
+        class="px-3 py-1 rounded-full font-medium border-2 text-xs border-slate-300 bg-slate-100 text-sky-700 hover:bg-sky-300 dark:bg-gray-700  dark:text-cyan-500  transition-all duration-300 ease-in-out"
+        [class.bg-sky-800]="cat.id === selectedCategoryId"
+        [class.text-sky-800]="cat.id === selectedCategoryId"
+        (click)="selectCategory(cat)"
+      >
+        {{ cat.name }}
+      </button>
+    </div>
+    
+ </div>
+ 
+
+      <!-- 🔸 Vidéos de la catégorie sélectionnée -->
+      <div *ngIf="filteredVideos">
+        <div class="flex flex-wrap justify-start gap-2 w-72 ">
+          <img
+            *ngFor="let video of filteredVideos"
+            [src]="video.imageBG"
+            alt="Image"
+            class="w-[75px] h-[65px] rounded-xl bg-cover shadow-md cursor-pointer hover:scale-105 transition-transform duration-300"
+            (click)="changerVideo(video.video)">
+        </div>
+      </div>
+
+    
+    </div>
+  </div>
+</div>
+
+<!-- 🎵 Modale MUS -->
+<div *ngIf="showMusModal">
+  <div class="absolute right-3 top-[135px] z-50">
+    <div class="bg-slate-200 backdrop-blur-md w-72 text-gray-600 rounded-xl p-6 flex flex-col gap-2 relative shadow-xl dark:bg-gray-800 dark:text-gray-300">
+      <div class="flex justify-between items-center">
+        <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-music"></i> Sound</p>
+        <button (click)="toggleModal('music')" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+     
+    
+
+      <!-- Liste des pistes -->
+      <div class="space-y-1">
+        <div *ngFor="let track of tracks">
+          <div class="flex items-center justify-between pt-2">
+            <p class="text-xs font-medium">{{ track.name }}</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <i class="fas fa-volume-low text-sky-600 text-xs"></i>
+            <input 
+              type="range" 
+              min="0" 
+              max="100" 
+              [(ngModel)]="track.volume"
+              (input)="onTrackVolumeChange(track)"
+              class="w-full h-1 accent-sky-600 cursor-pointer">
+            <button 
+              (click)="toggleTrack(track)"
+              class="text-sm h-2 flex items-center justify-center">
+              <i *ngIf="!track.playing" class="fas fa-play text-xs text-sky-600"></i>
+              <i *ngIf="track.playing" class="fas fa-pause text-xs text-sky-600"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 📊 Modale Statistiques -->
+<div *ngIf="showStatModal">
+  <div class="absolute right-3 top-[135px] z-50">
+    <div class="bg-slate-200 backdrop-blur-md w-72 text-gray-600 rounded-xl p-6 flex flex-col gap-2 relative shadow-xl dark:bg-gray-800 dark:text-gray-300">
+      <div class="flex justify-between items-center">
+        <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-chart-line"></i> Study stats</p>
+        <button (click)="toggleModal('stat')" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <!-- Contenu des statistiques à ajouter ici -->
+       <app-modal-studystats></app-modal-studystats>
+    </div>
+  </div>
+</div>
+
+<!-- 💡 Modale Motivation -->
+<div *ngIf="showMotModal">
+  <div class="absolute right-3 top-[135px] z-50">
+    <div class="bg-slate-200 backdrop-blur-md w-72 text-gray-600 rounded-xl p-6 flex flex-col gap-2 relative shadow-xl dark:bg-gray-800 dark:text-gray-300">
+      <div class="flex justify-between items-center">
+        <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-quote-left"></i> Motivational quote</p>
+        <button (click)="toggleModal('motivation')" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="flex flex-col">
+        <span class="cursor-pointer text-slate-600 dark:text-gray-200 text-xs font-normal p-2 py-3 inline-flex items-center hover:text-slate-900"
+          (click)="showAnotherQuote()">
+          <i class="fas fa-random mr-1"></i> Shuffle
+        </span>
+        <span class="cursor-pointer text-slate-600 dark:text-gray-200 text-xs p-2 py-3 inline-flex items-center hover:text-slate-900"
+          (click)="toggleModal('motivation')">
+          <i class="fas fa-eye mr-1"></i> Show
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+   <!-- Modal Motivation -->
+   <div *ngIf="showMotivationModal">
+    <div class="absolute right-3 top-[300px] z-10 ">
+      <div class=" bg-blend-soft-light w-96 text-white rounded-xl p-6 flex flex-col gap-2 relative ">
+  
+  
+        <div class="flex flex-col gap-2 items-center text-center">
+          <p class="text-xl font-semibold ">"{{ currentQuote }}"</p>
+          <p class="text-sm text-white mt-2">{{ currentAuthor }}</p>
+       
+        </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+<!-- Bouton flottant chatbot -->
+ <div (click)="toggleModal('chat')">
+<div class="fixed bottom-8 right-8">
+  <button class="bg-gradient-to-r from-sky-700 to-sky-500 w-14 h-14 text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 animate-bounce">
+    <i class="fas fa-robot text-xl"></i>
+  </button>
+ 
+</div>
+</div>
+<!-- 📊 Modale Statistiques -->
+<div *ngIf="showchatbotModal">
+  <div class="absolute right-3 top-[135px] z-50">
+ 
+      <div class="flex justify-between items-center">
+  
+      </div>
+      <!-- Contenu des statistiques à ajouter ici -->
+   <app-chatbot></app-chatbot>
+   
+  </div>
+</div>

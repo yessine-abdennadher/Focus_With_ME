@@ -1,0 +1,87 @@
+<app-header></app-header>
+<div class="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center bg-slate-100 dark:bg-gray-800 px-4 py-8 transition-colors duration-300">
+
+  <!-- Dark mode toggle (top right) -->
+  <button id="theme-toggle" type="button" class="absolute top-4 right-4 p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+    <svg id="theme-icon" class="w-6 h-6 text-gray-700 dark:text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+      <path id="sun-icon" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" style="display: block;"></path>
+      <path id="moon-icon" d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" style="display: none;"></path>
+    </svg>
+  </button>
+
+  <!-- Main content -->
+  <div class="w-full max-w-2xl mx-auto text-center space-y-8">
+    <!-- Discord logo -->
+    <div class="inline-flex items-center justify-center p-5 rounded-full bg-white dark:bg-gray-800  dark:shadow-inner dark:border-slate-200 border-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-sky-600 dark:text-sky-400" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.317 4.369A19.791 19.791 0 0016.142 3a.074.074 0 00-.078.037c-.334.593-.705 1.369-.967 1.982a19.736 19.736 0 00-5.195 0 12.49 12.49 0 00-.985-1.982.077.077 0 00-.078-.037A19.736 19.736 0 003.682 4.37a.064.064 0 00-.029.027C1.613 7.534.6 10.601.174 13.629a.078.078 0 00.03.07 19.9 19.9 0 005.993 3.029.074.074 0 00.079-.028c.462-.63.873-1.295 1.226-1.984a.076.076 0 00-.041-.103 12.658 12.658 0 01-1.81-.86.078.078 0 01-.007-.129c.122-.092.244-.187.364-.283a.073.073 0 01.075-.01c3.8 1.742 7.91 1.742 11.66 0a.074.074 0 01.076.01c.12.096.242.191.364.283a.078.078 0 01-.006.129 12.253 12.253 0 01-1.812.86.076.076 0 00-.04.104c.36.688.772 1.353 1.225 1.982a.074.074 0 00.078.028 19.87 19.87 0 005.994-3.028.078.078 0 00.03-.07c-.51-3.721-2.001-7.063-4.293-9.232a.06.06 0 00-.03-.027z"/>
+      </svg>
+    </div>
+
+    <!-- Headings -->
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+      Join <span class="text-sky-800 font-semibold dark:text-sky-400">Focus With Me!</span>
+    </h1>
+    
+    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-6xl">
+      The Discord community for focused study sessions with webcam accountability
+    </p>
+
+    <!-- Key features -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-2xl mx-auto">
+      <div class="flex items-start p-3 rounded-lg hover:bg-sky-50 dark:hover:bg-gray-700 transition-colors">
+        <svg class="h-6 w-6 text-sky-500 dark:text-sky-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+        </svg>
+        <div>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Study Sessions</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Work live with other members</p>
+        </div>
+      </div>
+      
+      <div class="flex items-start p-3 rounded-lg hover:bg-sky-50 dark:hover:bg-gray-700 transition-colors">
+        <svg class="h-6 w-6 text-sky-500 dark:text-sky-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <div>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Community</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Connect with motivated peers</p>
+        </div>
+      </div>
+
+      <div class="flex items-start p-3 rounded-lg hover:bg-sky-50 dark:hover:bg-gray-700 transition-colors">
+        <svg class="h-6 w-6 text-sky-500 dark:text-sky-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+        </svg>
+        <div>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Webcam Accountability</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Stay focused with video on</p>
+        </div>
+      </div>
+
+      <div class="flex items-start p-3 rounded-lg hover:bg-sky-50 dark:hover:bg-gray-700 transition-colors">
+        <svg class="h-6 w-6 text-sky-500 dark:text-sky-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+        <div>
+          <h3 class="font-semibold text-gray-800 dark:text-gray-100">Productivity</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Boost your focus and output</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="">
+      <a href="https://discord.com/invite/XJqWtuUg?fbclid=IwY2xjawKn3RNleHRuA2FlbQIxMABicmlkETFpckJUN0xpQjFDcVd6ekVuAR4g6UI6rn_8Wp8-Mgg1j2hOQmn-j8RMqWpN26thfbAceeEgDpJfp310c9KK3A_aem_IrNDioI55VWlAIsj6TmmcQ" 
+         target="_blank"
+         class="inline-flex items-center justify-center px-4 py-4 bg-sky-600 hover:bg-sky-700 dark:bg-sky-700 dark:hover:bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+        <span class="text-base font-medium">Join Discord Server</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+ 

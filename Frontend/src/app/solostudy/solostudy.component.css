@@ -1,0 +1,16 @@
+:host, main, app-root {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* empêche tout scroll */
+  height: 100%;
+  width: 100%;
+}
+/* Cacher la scrollbar sur tous les navigateurs */
+::-webkit-scrollbar {
+  display: none;
+}

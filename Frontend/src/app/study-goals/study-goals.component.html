@@ -1,0 +1,80 @@
+<!-- goal-manager.component.html -->
+<app-header></app-header>
+<div class="min-h-screen px-40 py-32 bg-slate-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-8">
+    <div class="flex flex-col">
+      <P class="text-sm font-normal pb-5">Hi {{ nomUtilisateur }} {{nomFamille}}, set yourself up for success! 🚀</P>
+      <P class="text-3xl font-bold">What do you want to achieve?</P>
+    </div>
+
+    <div class="text-sm text-gray-600 flex items-center gap-2 relative group">
+      📅 {{ today | date:'fullDate' }}
+    
+      <!-- Icône -->
+      <span class="text-sky-600 hover:text-sky-800 cursor-pointer relative">
+        ℹ️
+    
+        <!-- Tooltip -->
+        <div 
+          class="absolute -top-10 -left-7  -translate-x-1/2 w-max px-3 py-1 rounded bg-sky-700 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+        >
+        Manage your goals here 💡
+        </div>
+      </span>
+    </div>
+    
+    
+  </div>
+
+<!-- Input Field -->
+<form [formGroup]="form" (ngSubmit)="submitGoal()" class="flex items-center mb-6 gap-4">
+  <input
+    formControlName="but"
+    type="text"
+    placeholder="Write your goal here..."
+    class="flex-1 px-4 py-3 rounded-xl border-2 border-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 text-gray-700 dark:text-gray-100 dark:bg-slate-700"
+  />
+  <button
+    type="submit"
+    class="bg-sky-600 hover:bg-sky-700 text-white px-5 py-3 rounded-xl font-medium transition"
+  >
+    + Add
+  </button>
+</form>
+
+
+
+  <!-- Tabs -->
+  <div class="flex items-center border-b border-gray-300 mb-6 text-sm font-medium ">
+    <button 
+      class="mr-6 pb-2 transition"
+      [ngClass]="{ 'border-b-2 border-sky-500 dark:text-gray-100 text-sky-700': activeTab === 'open', 'text-gray-400 dark:text-gray-400 hover:text-sky-600': activeTab !== 'open' }"
+      (click)="activeTab = 'open'"
+    >Open Goals</button>
+    <button 
+      class="pb-2 transition"
+      [ngClass]="{ 'border-b-2 border-sky-500 dark:text-gray-100 text-sky-700': activeTab === 'completed', 'text-gray-400 dark:text-gray-400 hover:text-sky-600': activeTab !== 'completed' }"
+      (click)="activeTab = 'completed'"
+    >Completed Goals</button>
+  </div>
+
+  <!-- Goals List -->
+  <div *ngIf="activeTab === 'open'" class="space-y-4">
+    <div 
+      *ngFor="let goal of goals" 
+      class="flex justify-between items-center py-2 border-b border-gray-200"
+    >
+      <div class="flex items-center gap-3">
+        <span class="text-sky-600 text-xl">📝</span>
+        <span class="text-lg">{{ goal.but }}</span>
+      
+      </div>
+      <button (click)="removeGoal(goal.id)" class="text-red-500 hover:text-red-700 text-lg">🗑️</button>
+    </div>
+  </div>
+
+
+
+</div>

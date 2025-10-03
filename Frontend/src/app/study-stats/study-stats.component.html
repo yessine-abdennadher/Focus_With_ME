@@ -1,0 +1,150 @@
+<app-header></app-header>
+<div class="bg-slate-100 p-3 dark:bg-gray-800">
+  <div class="grid grid-cols-4 gap-4">
+
+    <!-- Profile Card -->
+    <div class="bg-white dark:bg-gray-700/55 rounded-2xl p-4 shadow-md hover:shadow transition-shadow duration-300 flex flex-col">
+      <h2 class="text-xl font-bold mb-4 text-gray-700 dark:text-gray-200">Profile
+
+      </h2>
+
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-20 h-20 bg-gradient-to-br from-sky-400 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-semibold shadow-md">
+          {{ nomUtilisateur.charAt(0) }}
+        </div>
+        <div>
+          <p class="font-semibold text-lg text-gray-700  dark:text-gray-200   dark:font-normal ">{{ nomUtilisateur }} {{ nomfaimly }}</p>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div class="flex items-center bg-gray-50 p-3 rounded-xl border-2 dark:border-gray-600 dark:bg-gray-800/55">
+          <span class="text-xl mr-3 text-sky-500">📖</span>
+          <div>
+            <p class="text-xs text-gray-500 dark:text-gray-200">Level</p>
+            <p class="text-sm font-semibold text-gray-700 dark:text-gray-200 dark:font-normal">{{ education }}</p>
+          </div>
+        </div>
+        <div class="flex items-center bg-gray-50 p-3 rounded-xl dark:bg-gray-800/55  border-2 dark:border-gray-600">
+          <span class="text-xl mr-3 text-sky-500 dark:text-gray-200">✈️</span>
+          <div>
+            <p class="text-xs text-gray-500 dark:text-gray-200">Country</p>
+            <p class="text-sm font-semibold text-gray-700 dark:text-gray-200 dark:font-normal">{{ country }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section principale à droite -->
+    <div class="col-span-3 flex gap-4 w-full">
+
+      <!-- Partie gauche : Performance -->
+   <div class="bg-white dark:bg-gray-700/55 rounded-2xl p-4 flex-1 shadow-md">
+  <h2 class="text-lg font-semibold mb-2 text-gray-700  dark:text-gray-200">Concentration Curve</h2>
+  <div class="h-[400px]">
+<canvas baseChart
+  [data]="lineChartData"
+  [options]="lineChartOptions"
+  [type]="'line'"
+  class="w-full h-full">
+</canvas>
+        </div>
+
+        <!-- Sous-stats -->
+        <div class="grid grid-cols-3 gap-4 mt-4">
+          <div class="bg-slate-100 rounded-2xl p-2 text-center border-2  dark:border-gray-600 dark:bg-gray-800/55">
+            <i class="fas fa-medal text-sky-700 text-xl mt-3 pb-2"></i>
+            <p class="text-sm text-gray-500 font-medium mt-2 dark:text-gray-200">Rank</p>
+            <p class="text-lg font-semibold text-sky-700 dark:text-gray-200">{{ rang }}</p>
+          </div>
+          <div class="bg-slate-100 rounded-2xl p-2 text-center border-2 dark:border-gray-600  dark:bg-gray-800/55">
+            <i class="fas fa-calendar-day text-sky-700 text-xl mr-2 mt-3 pb-2"></i>
+            <p class="text-sm text-gray-500 mt-2 font-medium dark:text-gray-200">Average/day</p>
+            <p class="text-lg font-semibold text-sky-700 dark:text-gray-200">{{ time }}h</p>
+          </div>
+          <div class="bg-slate-100 rounded-2xl p-2 text-center border-2  dark:border-gray-600 dark:bg-gray-800/55">
+            <i class="fas fa-clock text-sky-700 text-xl mr-2 mt-3 pb-2"></i>
+            <p class="text-sm text-gray-500 font-medium dark:text-gray-200">Study time</p>
+            <p class="text-lg font-semibold text-sky-700 dark:text-gray-200">{{ studyTime }}h</p>
+          </div>
+  </div>
+</div>
+
+
+      <!-- Partie droite : Leaderboard -->
+      <div class="flex flex-col gap-4 w-[350px]">
+
+        <!-- Graphique Emotion -->
+        <div class="bg-white dark:bg-gray-700/55 rounded-2xl p-4 shadow-md">
+          <h2 class="text-lg font-semibold  text-gray-800 dark:text-gray-200">Performance</h2>
+
+          <!-- Menu de sélection -->
+          <div class="flex justify-center gap-4 mb-4">
+            <button 
+              (click)="setEmotionChartType('bar')" 
+              class="px-4 py-2 rounded-lg bg-sky-100 text-sky-800 dark:text-sky-900 font-medium hover:bg-sky-200 transition-colors"
+              [class.bg-sky-500.text-white]="'bar' === currentEmotionChartType"
+              [class.hover:bg-sky-600]="'bar' === currentEmotionChartType"
+            >
+              Bar Chart
+            </button>
+
+            <button 
+              (click)="setEmotionChartType('doughnut')" 
+              class="px-4 py-2 rounded-lg bg-sky-100 text-sky-800 font-medium dark:text-sky-900 hover:bg-sky-200 transition-colors"
+              [class.bg-sky-500.text-white]="'doughnut' === currentEmotionChartType"
+              [class.hover:bg-sky-600]="'doughnut' === currentEmotionChartType"
+            >
+              Pie Chart
+            </button>
+          </div>
+
+          <!-- Contenu du graphique -->
+  <div class="h-64 flex items-center justify-center text-gray-400 border rounded-lg">
+<ng-container *ngIf="currentEmotionChartType === 'doughnut'; else barChart">
+<div class="w-[250px] h-[250px] mx-auto">
+  <canvas baseChart
+    [data]="pieChartData"
+    [options]="pieChartOptions"
+    [type]="'doughnut'"
+    class="w-full h-full">
+  </canvas>
+</div>
+
+
+</ng-container>
+
+<ng-template #barChart>
+  <canvas baseChart
+    [data]="barChartData"
+    [options]="barChartOptions"
+    chartType="bar"
+    class="w-full h-full">
+  </canvas>
+</ng-template>
+
+</div>
+
+        </div>
+
+        <!-- Classement -->
+        <div class="bg-white rounded-2xl p-4 shadow-md dark:bg-gray-700/55">
+          <h2 class="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">🏆 Leaderboard</h2>
+
+          <!-- Liste scrollable -->
+          <div style="max-height: 200px; overflow-y: auto;" class="pr-2">
+            <ul class="space-y-3">
+              <li *ngFor="let user of usersStudyTime | slice:0:4" class="flex justify-between items-center border-b pb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-bold text-sky-700 dark:text-cyan-700">#{{ user.rang }}</span>
+                  <span class="text-sm text-gray-800 dark:text-gray-200">{{ user.name }}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

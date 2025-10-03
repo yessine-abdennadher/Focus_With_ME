@@ -1,0 +1,65 @@
+<!-- Conteneur du chat -->
+<div class="max-w-md w-72 mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+
+  <!-- Messages -->
+  <div class="h-[320px] p-4 space-y-3 overflow-y-auto bg-slate-200 dark:bg-gray-700">
+    <ng-container *ngFor="let msg of messages">
+      <!-- Message utilisateur -->
+      <div class="flex justify-end">
+        <div class="bg-sky-100 text-sky-800 dark:bg-sky-700 dark:text-gray-50 dark:font-medium px-4 py-2 rounded-xl max-w-xs md:max-w-sm">
+          <strong>👤 Vous :</strong> {{ msg.user }}
+        </div>
+      </div>
+
+      <!-- Message bot -->
+      <div class="flex justify-start">
+        <div class="bg-slate-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-xl max-w-xs md:max-w-sm">
+          <strong>🤖 Bot :</strong>
+
+          <!-- Si c'est une liste numérotée -->
+          <ng-container *ngIf="msg.bot && extractNumberedItems(msg.bot).length > 1; else normalText">
+            <ol class="list-decimal pl-5 mt-2 space-y-1">
+              <li *ngFor="let item of extractNumberedItems(msg.bot)">
+                {{ item }}
+              </li>
+            </ol>
+          </ng-container>
+
+          <!-- Sinon texte simple -->
+          <ng-template #normalText>
+            <span class="block mt-1">{{ msg.bot }}</span>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Message en chargement -->
+    <div *ngIf="loading" class="flex justify-start">
+      <div class="bg-slate-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg max-w-xs">
+        <strong>🤖 Bot :</strong>
+        <span class="inline-block animate-pulse">...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+<div class="p-4 bg-white dark:bg-gray-800/35 border-t border-gray-200 dark:border-gray-700 flex gap-2">
+  <input
+    [(ngModel)]="userInput"
+    (keyup.enter)="sendMessage()"
+    placeholder="Ask a question..."
+    [disabled]="loading"
+    class="flex-grow px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-white"
+  />
+  <button
+    (click)="sendMessage()"
+    [disabled]="loading || !userInput.trim()"
+    class="p-2 bg-sky-600 hover:bg-sky-700 disabled:bg-sky-400 text-white rounded-lg transition duration-200 flex items-center justify-center"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="22" y1="2" x2="11" y2="13"></line>
+      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+    </svg>
+  </button>
+</div>
+</div>
