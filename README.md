@@ -97,7 +97,7 @@ uvicorn main:app --reload
 
 Développé par **Yassine Abdennadher**
 
-* 📧 Email : [ton.email@example.com](yassineabdennadher22@gmail.com)
-* 💼 [LinkedIn]([https://www.linkedin.com/in/ton-profil](https://www.linkedin.com/feed/))
+* 📧 Email : [yassineabdennadher22@gmail.com](yassineabdennadher22@gmail.com)
+* 💼 [LinkedIn] ([https://www.linkedin.com/in/ton-profil](https://www.linkedin.com/feed/))
 
 
